@@ -23,7 +23,7 @@ Run application:
 mocap --preview
 ```
 
-By default, the motion data is sent to the WebRTC server at `0.0.0.0:8080`. The `--preview` flag displays the motion data in a window.
+By default, the motion data is sent to the UDP server at `0.0.0.0:8000`. The `--preview` flag displays the motion data in a window.
 
 Run `mocap --help` for more information.
 

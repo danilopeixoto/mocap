@@ -6,7 +6,7 @@ import typer
 from . import __version__
 from .media import VideoSource, ComputeStream
 from .vision import HandTracking, HandDrawing, FramerateDrawing
-from .streaming import VideoPlayer, WebRTCServer
+from .streaming import VideoPlayer, UDPServer
 
 
 app = typer.Typer(add_completion = False)
@@ -19,7 +19,7 @@ def show_version(value: bool):
 
 @app.command(
   context_settings = dict(help_option_names = ['-h', '--help']),
-  help = 'Process video and send motion data to the WebRTC server.')
+  help = 'Process video and send motion data to the UDP server.')
 def main(
     source: str = typer.Option(
       '0',
@@ -37,12 +37,12 @@ def main(
     hostname: str =  typer.Option(
       '0.0.0.0',
       '--hostname, -host',
-      help = 'WebRTC server hostname.'),
+      help = 'UDP server hostname.'),
     port: int =  typer.Option(
-      8080,
+      8000,
       '--port, -p',
       min = 0,
-      help = 'WebRTC server port.'),
+      help = 'UDP server port.'),
     preview: bool = typer.Option(
       False,
       '--preview', '-prev',
@@ -71,7 +71,7 @@ def main(
 
       output_stream.process()
 
-      server = WebRTCServer(
+      server = UDPServer(
         hostname,
         port,
         output_stream)
