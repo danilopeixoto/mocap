@@ -1,12 +1,12 @@
 from typing import Optional, Tuple
-from multiprocessing import Process
+from threading import Thread
 
 import typer
 
 from . import __version__
 from .media import VideoSource, ComputeStream
 from .vision import HandTracking, HandDrawing, FramerateDrawing
-from .streaming import VideoPlayer, UDPServer
+from .streaming import VideoPlayer, UDPServer, MotionDataEncoding
 
 
 app = typer.Typer(add_completion = False)
@@ -69,21 +69,19 @@ def main(
         output_stream.add_stage(HandDrawing())
         output_stream.add_stage(FramerateDrawing())
 
+      output_stream.add_stage(MotionDataEncoding())
+
       output_stream.process()
 
-      server = UDPServer(
-        hostname,
-        port,
-        output_stream)
+      with UDPServer(hostname, port, output_stream) as server:
+        if preview:
+          thread = Thread(target = server.run, daemon = True)
+          thread.start()
 
-      if preview:
-        server_process = Process(target = server.run, daemon = True)
-        server_process.start()
-
-        player = VideoPlayer('Mocap', output_stream)
-        player.play()
-      else:
-        server.run()
+          player = VideoPlayer('Mocap', output_stream)
+          player.play()
+        else:
+          server.run()
   except Exception as exception:
     typer.echo(f'Error: {exception}', err = True)
     typer.Exit(code = -1)
