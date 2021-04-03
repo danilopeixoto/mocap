@@ -5,11 +5,11 @@ class MotionDataEncoding:
   def __init__(self, precision = float):
     self.__precision = precision
 
-  def __format_landmark(self, landmark):
-    return landmark.x, landmark.y, landmark.z
+  def __transform_landmark(self, landmark):
+    return landmark.x - 0.5, 0.5 - landmark.y, -landmark.z
 
   def __format(self, landmarks):
-    return list(map(self.__format_landmark, landmarks.landmark))
+    return list(map(self.__transform_landmark, landmarks.landmark))
 
   def precision(self):
     return self.__precision
