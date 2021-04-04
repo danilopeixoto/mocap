@@ -6,7 +6,7 @@ import typer
 from . import __version__
 from .media import VideoSource, ComputeStream
 from .vision import HandTracking, HandDrawing, FramerateDrawing
-from .streaming import VideoPlayer, UDPServer, MotionDataEncoding
+from .streaming import MotionDataEncoding, VideoPlayer, UDPServer
 
 
 app = typer.Typer(add_completion = False)

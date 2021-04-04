@@ -37,12 +37,9 @@ class UDPServer:
 
     while self.__is_streaming and self.__stream.is_opened():
       _, data = self.__stream.read()
+      _, client_address = self.__socket.recvfrom(1024)
 
-      _, client_address = self.__socket.recvfrom(1)
-      size = self.__socket.sendto(data, client_address)
-
-      if len(data) != size:
-        break
+      self.__socket.sendto(data, client_address)
 
     self.__is_streaming = False
 
