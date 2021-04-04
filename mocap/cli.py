@@ -48,11 +48,11 @@ def server(
       help = 'Pad video and keep the original aspect ratio.'),
     hostname: str =  typer.Option(
       '0.0.0.0',
-      '--hostname, -host',
+      '--hostname', '-host',
       help = 'UDP server hostname.'),
     port: int =  typer.Option(
       8000,
-      '--port, -p',
+      '--port', '-p',
       min = 0,
       help = 'UDP server port.'),
     preview: bool = typer.Option(
@@ -97,13 +97,13 @@ def server(
   context_settings = dict(help_option_names = ['-h', '--help']),
   help = 'Stream motion data from UDP server.')
 def client(
-    hostname: str =  typer.Option(
+    hostname: str = typer.Option(
       '0.0.0.0',
-      '--hostname, -host',
+      '--hostname', '-host',
       help = 'UDP server hostname.'),
-    port: int =  typer.Option(
+    port: int = typer.Option(
       8000,
-      '--port, -p',
+      '--port', '-p',
       min = 0,
       help = 'UDP server port.')):
   try:
