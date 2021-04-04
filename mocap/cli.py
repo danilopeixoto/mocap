@@ -46,11 +46,11 @@ def server(
       False,
       '--padding', '-pad',
       help = 'Pad video and keep the original aspect ratio.'),
-    hostname: str =  typer.Option(
+    hostname: str = typer.Option(
       '0.0.0.0',
       '--hostname', '-host',
       help = 'UDP server hostname.'),
-    port: int =  typer.Option(
+    port: int = typer.Option(
       8000,
       '--port', '-p',
       min = 0,
