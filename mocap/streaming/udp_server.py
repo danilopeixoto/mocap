@@ -12,7 +12,7 @@ class UDPServer:
     self.__socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     self.__socket.bind((self.__hostname, self.__port))
 
-    print(f'UDP server listening on {self.__hostname}:{self.__port}...')
+    print(f'INFO: UDP server listening on {self.__hostname}:{self.__port}.')
 
   def __enter__(self):
     return self

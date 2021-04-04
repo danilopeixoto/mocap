@@ -19,13 +19,19 @@ Use the `-e, --editable` flag to install the package in development mode.
 
 ## Usage
 
-Run application:
+Run server:
 
 ```
-mocap --preview
+mocap server --preview
 ```
 
-By default, the motion data is sent to the UDP server at `0.0.0.0:8000`. The `--preview` flag displays the motion data in a window.
+By default, the motion data is sent to the UDP server at `0.0.0.0:8000`. The `--preview` flag also displays the motion data in a window.
+
+Run client:
+
+```
+mocap client
+```
 
 Run `mocap --help` for more information.
 
@@ -48,7 +54,7 @@ docker build -t mocap:1.0.0 .
 Run image application:
 
 ```
-docker run -d --device /dev/video0:/dev/video0 -p 8000:8000 mocap:1.0.0
+docker run -d --device /dev/video0:/dev/video0 -p 8000:8000 mocap:1.0.0 server
 ```
 
 Use the `--rm` flag to automatically remove the container when application exits.

@@ -17,13 +17,19 @@ pip install .
 
 ## Usage
 
-Run application:
+Run server:
 
 ```
-mocap --preview
+mocap server --preview
 ```
 
-By default, the motion data is sent to the UDP server at `0.0.0.0:8000`. The `--preview` flag displays the motion data in a window.
+By default, the motion data is sent to the UDP server at `0.0.0.0:8000`. The `--preview` flag also displays the motion data in a window.
+
+Run client:
+
+```
+mocap client
+```
 
 Run `mocap --help` for more information.
 
