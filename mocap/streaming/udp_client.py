@@ -35,9 +35,7 @@ class UDPClient:
     self.__socket.close()
 
   def read(self):
-    size = self.__encoding.size()
-
     self.__socket.sendto(b'frame', self.__address)
-    data, _ = self.__socket.recvfrom(size)
+    data, _ = self.__socket.recvfrom(self.__encoding.size())
 
-    return self.__encoding.decode(data) if len(data) == size else []
+    return self.__encoding.decode(data)
