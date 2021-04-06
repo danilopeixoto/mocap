@@ -3,7 +3,7 @@ import socket
 from . import MotionDataEncoding
 
 
-class UDPClient:
+class UDPReceiver:
   def __init__(self, hostname, port, timeout = 1):
     self.__hostname = hostname
     self.__port = port
@@ -12,6 +12,7 @@ class UDPClient:
     self.__address = (self.__hostname, self.__port)
 
     self.__socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    self.__socket.bind(self.__address)
     self.__socket.settimeout(self.__timeout)
 
     self.__encoding = MotionDataEncoding()
@@ -35,7 +36,6 @@ class UDPClient:
     self.__socket.close()
 
   def read(self):
-    self.__socket.sendto(b'frame', self.__address)
     data, _ = self.__socket.recvfrom(self.__encoding.size())
 
     return self.__encoding.decode(data)

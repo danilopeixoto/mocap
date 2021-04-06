@@ -1,6 +1,6 @@
 __title__ = 'Mocap'
 __version__ = '1.0.0'
-__description__ = 'A real-time application to capture and stream hand motion data.'
+__description__ = 'A real-time application to capture hand motion data.'
 __author__ = 'Danilo Peixoto'
 __email__ = 'danilopeixoto@outlook.com'
 __license__ = 'BSD-3-Clause'

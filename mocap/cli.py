@@ -6,7 +6,7 @@ import typer
 from . import __version__
 from .media import VideoSource, ComputeStream
 from .vision import HandTracking, HandDrawing, FramerateDrawing
-from .streaming import MotionDataEncoding, VideoPlayer, UDPServer, UDPClient
+from .streaming import MotionDataEncoding, VideoPlayer, UDPSender, UDPReceiver
 
 
 app = typer.Typer(add_completion = False)
@@ -15,7 +15,7 @@ app = typer.Typer(add_completion = False)
 @app.callback(
   invoke_without_command = True,
   context_settings = dict(help_option_names = ['-h', '--help']),
-  help = 'A real-time application to capture and stream hand motion data.')
+  help = 'A real-time application to capture hand motion data.')
 def main(
     context: typer.Context,
     version: Optional[bool] = typer.Option(
@@ -31,8 +31,8 @@ def main(
 
 @app.command(
   context_settings = dict(help_option_names = ['-h', '--help']),
-  help = 'Process video and send motion data to UDP server.')
-def server(
+  help = 'Capture and send hand motion data to UDP socket.')
+def stream(
     source: str = typer.Option(
       '0',
       '--source', '-src',
@@ -49,12 +49,12 @@ def server(
     hostname: str = typer.Option(
       '0.0.0.0',
       '--hostname', '-host',
-      help = 'UDP server hostname.'),
+      help = 'UDP hostname.'),
     port: int = typer.Option(
       8000,
       '--port', '-p',
       min = 0,
-      help = 'UDP server port.'),
+      help = 'UDP port.'),
     preview: bool = typer.Option(
       False,
       '--preview', '-prev',
@@ -80,36 +80,36 @@ def server(
 
       output_stream.process()
 
-      with UDPServer(hostname, port, output_stream) as server:
+      with UDPSender(hostname, port, output_stream) as sender:
         if preview:
-          thread = Thread(target = server.run, daemon = True)
+          thread = Thread(target = sender.send, daemon = True)
           thread.start()
 
           player = VideoPlayer('Mocap', output_stream)
           player.play()
         else:
-          server.run()
+          sender.send()
   except Exception as exception:
     typer.echo(f'Error: {exception}', err = True)
     typer.Exit(code = -1)
 
 @app.command(
   context_settings = dict(help_option_names = ['-h', '--help']),
-  help = 'Stream motion data from UDP server.')
+  help = 'Receive hand motion data from UDP socket.')
 def client(
     hostname: str = typer.Option(
       '0.0.0.0',
       '--hostname', '-host',
-      help = 'UDP server hostname.'),
+      help = 'UDP hostname.'),
     port: int = typer.Option(
       8000,
       '--port', '-p',
       min = 0,
-      help = 'UDP server port.')):
+      help = 'UDP port.')):
   try:
-    with UDPClient(hostname, port) as client:
+    with UDPReceiver(hostname, port) as receiver:
       while True:
-        typer.echo(client.read())
+        typer.echo(receiver.read())
   except Exception as exception:
     typer.echo(f'Error: {exception}', err = True)
     typer.Exit(code = -1)

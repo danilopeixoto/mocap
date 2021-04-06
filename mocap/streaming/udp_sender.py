@@ -1,18 +1,16 @@
 import socket
 
 
-class UDPServer:
+class UDPSender:
   def __init__(self, hostname, port, stream):
     self.__hostname = hostname
     self.__port = port
     self.__stream = stream
 
     self.__is_streaming = False
+    self.__address = (self.__hostname, self.__port)
 
     self.__socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    self.__socket.bind((self.__hostname, self.__port))
-
-    print(f'INFO: UDP server listening on {self.__hostname}:{self.__port}.')
 
   def __enter__(self):
     return self
@@ -32,14 +30,12 @@ class UDPServer:
   def is_streaming(self):
     return self.__is_streaming
 
-  def run(self):
+  def send(self):
     self.__is_streaming = True
 
     while self.__is_streaming and self.__stream.is_opened():
       _, data = self.__stream.read()
-      _, client_address = self.__socket.recvfrom(1024)
-
-      self.__socket.sendto(data, client_address)
+      self.__socket.sendto(data, self.__address)
 
     self.__is_streaming = False
 

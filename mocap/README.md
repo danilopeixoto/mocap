@@ -1,6 +1,6 @@
 # Mocap
 
-A real-time application to capture and stream hand motion data.
+A real-time application to capture hand motion data.
 
 ## Prerequisites
 
@@ -17,13 +17,13 @@ pip install .
 
 ## Usage
 
-Run server:
+Run application:
 
 ```
-mocap server --preview
+mocap stream --preview
 ```
 
-By default, the motion data is sent to the UDP server at `0.0.0.0:8000`. The `--preview` flag also displays the motion data in a window.
+By default, the motion data is sent to the UDP socket at `0.0.0.0:8000`. The `--preview` flag also displays the motion data in a window.
 
 Run client:
 

@@ -1,6 +1,6 @@
 # Mocap
 
-A real-time application to capture and stream hand motion data.
+A real-time application to capture hand motion data.
 
 ## Prerequisites
 
@@ -19,13 +19,13 @@ Use the `-e, --editable` flag to install the package in development mode.
 
 ## Usage
 
-Run server:
+Run application:
 
 ```
-mocap server --preview
+mocap stream --preview
 ```
 
-By default, the motion data is sent to the UDP server at `0.0.0.0:8000`. The `--preview` flag also displays the motion data in a window.
+By default, the motion data is sent to the UDP socket at `0.0.0.0:8000`. The `--preview` flag also displays the motion data in a window.
 
 Run client:
 
@@ -54,7 +54,7 @@ docker build -t mocap:1.0.0 .
 Run image application:
 
 ```
-docker run -d --device /dev/video0:/dev/video0 -p 8000:8000 mocap:1.0.0 server
+docker run -d --device /dev/video0:/dev/video0 -p 8000:8000 mocap:1.0.0 stream
 ```
 
 Use the `--rm` flag to automatically remove the container when application exits.

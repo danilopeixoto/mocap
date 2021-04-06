@@ -1,6 +1,6 @@
 FROM python:3.6
 
-LABEL description "A real-time application to capture and stream hand motion data."
+LABEL description "A real-time application to capture hand motion data."
 LABEL version "1.0.0"
 LABEL maintainer "Danilo Peixoto <danilopeixoto@outlook.com>"
 
