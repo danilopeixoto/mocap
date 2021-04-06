@@ -54,7 +54,7 @@ docker build -t mocap:1.0.0 .
 Run image application:
 
 ```
-docker run -d --device /dev/video0:/dev/video0 -p 8000:8000 mocap:1.0.0 stream
+docker run -d --net host --device /dev/video0:/dev/video0 mocap:1.0.0 stream
 ```
 
 Use the `--rm` flag to automatically remove the container when application exits.
